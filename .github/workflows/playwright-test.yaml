@@ -11,17 +11,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
-      
-      - uses: microsoft/playwright-github-action@v1
+          node-version: "14.x" 
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm ci
 
       - name: Run tests
-        run: npm test
-
+        continue-on-error: false
+        working-directory: "./test"
+        run: |
+          npx playwright install
+          HOME=/root npx playwright test
 
